@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+
+<launch>
+
+  <!-- ur10 settings -->
+  <arg name="CONFIG_FILE_PATH" default="$(find tum_ics_ur10_controller_tutorial)/launch/configs/configUR10.ini"/>
+
+  <!-- the controller -->
+  <node name="bw_lpf" 
+    pkg="tum_ics_ur10_controller_tutorial" 
+    type="bw_lpf_node" 
+    output="screen"/>
+
+  <node name="adaptive_controller" pkg="tum_ics_ur10_controller_tutorial" type="adaptive_controller_node" args="$(arg CONFIG_FILE_PATH)" output="screen">
+
+    <!-- internal parameter --> 
+    <rosparam file="$(find tum_ics_ur_robot_controllers)/launch/configs/pidInt.yaml" command="load" />
+
+    <!-- controller parameter --> 
+    <rosparam file="$(find tum_ics_ur10_controller_tutorial)/launch/configs/adaptivecontrol.yaml" command="load" />
+    
+  </node>
+
+  <!-- <node name="plotjuggler_with_layout"  
+        pkg="plotjuggler" 
+        type="PlotJuggler"
+         args="__layout $(find tum_ics_ur10_controller_tutorial)/launch/configs/plotjuggler_layout.xml"/> -->
+
+</launch>
